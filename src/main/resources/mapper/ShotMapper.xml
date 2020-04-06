@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qarantinno.api.persistence.mapper.ShotMapper">
+    
+    <insert id="create" keyProperty="shot.id" useGeneratedKeys="true">
+        Insert into shots(week_day, people, source, tracking_data, shot_at, place_id)
+        values (#{shot.weekDay}, #{shot.people}, #{shot.source}, #{shot.trackingData}::jsonb, #{shot.shotAt}, #{placeId})
+    </insert>
+
+    <sql id="getAll">
+        Select
+            s.id as shot_id,
+            s.week_day as shot_week_day,
+            s.people as shot_people,
+            s.source as shot_source,
+            s.tracking_data as shot_tracking_data,
+            s.shot_at as shot_shot_at,
+            <include refid="com.qarantinno.api.persistence.mapper.PlaceMapper.selectAllBody"/>
+        from shots s
+            left join
+                places p
+            on
+                s.place_id = p.id
+            <include refid="com.qarantinno.api.persistence.mapper.PlaceMapper.selectAllJoins"/>
+    </sql>
+
+    <sql id="getAllByCriteriaWhereClause">
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            <if test="place != null and place.name() != 'any'">
+                AND p.type = #{place}
+            </if>
+            <if test="placeModifier != null and placeModifier.name() != 'any'">
+                AND p.modifier = #{placeModifier}
+            </if>
+            <if test="weekDay != null and weekDay.name() != 'any'">
+                AND s.week_day = #{weekDay}
+            </if>
+            <if test="moment != null">
+                AND date_trunc('day', s.shot_at) = date_trunc('day', #{moment})
+            </if>
+        </trim>
+    </sql>
+
+    <select id="findAllByCriteria" resultMap="shotResultMap">
+        <include refid="getAll"/>
+        <include refid="getAllByCriteriaWhereClause"/>
+    </select>
+
+    <select id="findCountByCriteria" resultType="java.lang.Integer">
+        Select count(*)
+        from shots s
+            left join
+        places p
+            on
+        s.place_id = p.id
+        <include refid="com.qarantinno.api.persistence.mapper.PlaceMapper.selectAllJoins"/>
+        <include refid="getAllByCriteriaWhereClause"/>
+    </select>
+
+    <resultMap id="shotResultMap" type="com.qarantinno.api.domain.Shot" autoMapping="false">
+        <id property="id" column="shot_id"/>
+        <result property="weekDay" column="shot_week_day"/>
+        <result property="people" column="shot_people"/>
+        <result property="source" column="shot_source"/>
+        <result property="trackingData" column="shot_tracking_data"/>
+        <result property="shotAt" column="shot_shot_at"/>
+        <association property="place" resultMap="com.qarantinno.api.persistence.mapper.PlaceMapper.placeResultMap"/>
+    </resultMap>
+</mapper>

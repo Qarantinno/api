@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozer.sourceforge.net
+      http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+    <mapping type="bi-directional" wildcard="false">
+        <class-a>com.qarantinno.api.domain.Shot</class-a>
+        <class-b>com.qarantinno.api.web.dto.ShotDTO</class-b>
+        <field>
+            <a>id</a>
+            <b>id</b>
+        </field>
+        <field>
+            <a>weekDay</a>
+            <b>weekDay</b>
+        </field>
+        <field>
+            <a>people</a>
+            <b>people</b>
+        </field>
+        <field>
+            <a>source</a>
+            <b>source</b>
+        </field>
+        <field>
+            <a>trackingData</a>
+            <b>trackingData</b>
+        </field>
+        <field copy-by-reference="true">
+            <a>shotAt</a>
+            <b>shotAt</b>
+        </field>
+        <field>
+            <a>place</a>
+            <b>place</b>
+        </field>
+    </mapping>
+
+</mappings>

@@ -1,0 +1,29 @@
+app:
+  database:
+    url: ${db.url}?currentSchema=qarantinno
+    username: ${db.username}
+    password: ${db.password}
+    max-pool-size: ${db.max-pool-size}
+  client-token: ${auth.client-token}
+  port: ${port}
+
+server:
+  port: ${app.port}
+  servlet:
+    context-path: /
+
+spring:
+  datasource:
+    url: ${app.database.url}
+    username: ${app.database.username}
+    password: ${app.database.password}
+    driver-class-name: org.postgresql.Driver
+    schema: classpath:db/ddl.sql
+    data: classpath:db/dml.sql
+    initialization-mode: always
+    continue-on-error: true
+    hikari:
+      maximum-pool-size: ${app.database.max-pool-size}
+
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml

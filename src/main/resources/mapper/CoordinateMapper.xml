@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qarantinno.api.persistence.mapper.CoordinateMapper">
+    
+    <insert id="create" keyProperty="id" useGeneratedKeys="true">
+        Insert into coordinates(coordinate) values (point(#{lat}, #{lng}))
+    </insert>
+
+    <resultMap id="coordinateResultMap" type="com.qarantinno.api.domain.Coordinate" autoMapping="false">
+        <id property="id" column="coordinate_id"/>
+        <result property="ltd" column="coordinate_coordinate.x"/>
+        <result property="lng" column="coordinate_coordinate.y"/>
+    </resultMap>
+</mapper>

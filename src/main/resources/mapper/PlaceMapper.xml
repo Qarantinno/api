@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qarantinno.api.persistence.mapper.PlaceMapper">
+    
+    <insert id="create" keyProperty="id" useGeneratedKeys="true">
+        Insert into places(
+           name
+           ,type
+           ,modifier
+           ,address
+           <if test="coordinate != null">
+                ,coordinate_id
+           </if>
+       )
+            values
+       (
+            #{name}
+            ,#{type}
+            ,#{modifier}
+            ,#{address}
+            <if test="coordinate != null">
+                ,#{coordinate.id}
+            </if>
+        )
+    </insert>
+
+    <sql id="selectAll">
+        Select p.id as place_id,
+    <include refid="selectAllBody"/>
+        from places p
+    <include refid="selectAllJoins"/>
+    </sql>
+
+    <sql id="selectAllBody">
+        p.name as place_name,
+        p.type as place_type,
+        p.modifier as place_modifier,
+        p.address as place_address,
+
+        c.id as coordinate_id,
+        c.coordinate as coordinate_coordinate
+    </sql>
+
+    <sql id="selectAllJoins">
+        left join
+            coordinates c
+        on
+            p.coordinate_id = c.id
+    </sql>
+
+    <select id="findById" resultMap="placeResultMap">
+        <include refid="selectAll"/>
+        Where p.id = #{id}
+    </select>
+
+    <select id="findByNameAndTypeAndModifier" resultMap="placeResultMap">
+        <include refid="selectAll"/>
+        Where p.name = #{name} and p.type = #{type} and p.modifier = #{modifier}
+    </select>
+
+    <select id="existsById" resultType="java.lang.Boolean">
+        Select exists(select 1 from places where id = #{id})
+    </select>
+
+    <resultMap id="placeResultMap" type="com.qarantinno.api.domain.Place" autoMapping="false">
+        <id property="id" column="place_id"/>
+        <result property="name" column="place_name"/>
+        <result property="type" column="place_type"/>
+        <result property="modifier" column="place_modifier"/>
+        <result property="address" column="place_address"/>
+        <association property="coordinate" resultMap="com.qarantinno.api.persistence.mapper.CoordinateMapper.coordinateResultMap"/>
+    </resultMap>
+</mapper>

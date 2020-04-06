@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozer.sourceforge.net
+      http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+    <mapping type="bi-directional" wildcard="false">
+        <class-a>com.qarantinno.api.domain.Place</class-a>
+        <class-b>com.qarantinno.api.web.dto.PlaceDTO</class-b>
+        <field>
+            <a>id</a>
+            <b>id</b>
+        </field>
+        <field>
+            <a>name</a>
+            <b>name</b>
+        </field>
+        <field>
+            <a>type</a>
+            <b>type</b>
+        </field>
+        <field>
+            <a>modifier</a>
+            <b>modifier</b>
+        </field>
+        <field>
+            <a>address</a>
+            <b>address</b>
+        </field>
+        <field>
+            <a>coordinate</a>
+            <b>coordinate</b>
+        </field>
+    </mapping>
+
+</mappings>

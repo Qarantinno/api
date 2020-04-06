@@ -1,0 +1,47 @@
+plugins {
+    id 'java'
+    id "org.springframework.boot" version "2.2.6.RELEASE"
+    id "io.spring.dependency-management" version "1.0.9.RELEASE"
+}
+
+group 'com.qarantinno'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 11
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+ext {
+    lombokVersion = '1.18.12'
+    swaggerVersion = '2.9.2'
+    mybatisVersion = '2.1.2'
+    postgresqlVersion = '42.2.12'
+    dozerVersion = '5.5.1'
+}
+
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-web"
+
+    implementation "org.mybatis.spring.boot:mybatis-spring-boot-starter:$mybatisVersion"
+    implementation "org.postgresql:postgresql:$postgresqlVersion"
+
+    implementation "io.springfox:springfox-swagger2:$swaggerVersion"
+    implementation "io.springfox:springfox-swagger-ui:$swaggerVersion"
+
+    implementation "net.sf.dozer:dozer:$dozerVersion"
+
+    compileOnly "org.projectlombok:lombok:$lombokVersion"
+    annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+}
+
+bootRun {
+    if (project.hasProperty('args')) {
+        args project.args.split(',')
+    }
+}
