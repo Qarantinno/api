@@ -66,7 +66,7 @@ public class WebExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public @ResponseBody ErrorPayload handleNotTrackedExceptions(Exception e) {
-        LOGGER.error(e.getMessage());
+        LOGGER.error(e.getMessage(), e);
         return new ErrorPayload(INTERNAL_SERVER_ERROR.getStatus(), INTERNAL_SERVER_ERROR.getMessage());
     }
 }
