@@ -21,7 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.groups.Default;
+
 import static com.qarantinno.api.domain.execption.IllegalOperationException.IllegalOperationExceptionType.ILLEGAL_PLACE_CREATE;
+import static com.qarantinno.api.domain.execption.IllegalOperationException.IllegalOperationExceptionType.ILLEGAL_SHOT_CREATE;
 
 @Api("Place controller documentation")
 @ResponseStatus(HttpStatus.OK)
@@ -58,13 +61,13 @@ public class PlaceController {
     @PostMapping("/{id}/shots")
     @ResponseStatus(HttpStatus.CREATED)
     public ShotDTO addShot(
-            @RequestBody @Validated(ValidationGroups.InternalOnCreate.class) ShotDTO shotDTO,
+            @RequestBody @Validated({Default.class, ValidationGroups.InternalOnCreate.class}) ShotDTO shotDTO,
             @PathVariable("id") Long id,
             @RequestHeader("client-token") String clientId
     ) {
         // TODO: 4/4/20 add security instead of hardcoded token
         if (!clientToken.equals(clientId)) {
-            throw new IllegalOperationException(ILLEGAL_PLACE_CREATE, "Cannot create place: illegal access");
+            throw new IllegalOperationException(ILLEGAL_SHOT_CREATE, "Cannot create shot: illegal access");
         }
 
         Shot shot = mapper.map(shotDTO, Shot.class);

@@ -21,7 +21,7 @@ public class ShotServiceImpl implements ShotService {
     @Override
     @Transactional
     public Shot create(Shot shot, Long placeId) {
-        if (shot.getWeekDay() == null && shot.getShotAt() != null) {
+        if (shot.getShotAt() != null) {
             Shot.WeekDay weekDay = Shot.WeekDay.getFrom(shot.getShotAt().getDayOfWeek());
             shot.setWeekDay(weekDay);
         }

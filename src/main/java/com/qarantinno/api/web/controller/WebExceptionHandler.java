@@ -8,7 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,6 +33,18 @@ public class WebExceptionHandler {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public @ResponseBody ErrorPayload handleIllegalOperationException(IllegalOperationException e) {
         return new ErrorPayload(ILLEGAL_OPERATION_EXCEPTION.getStatus(), e.getType().getMessage());
+    }
+
+    @ExceptionHandler(MissingRequestHeaderException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public @ResponseBody ErrorPayload handleMissingRequestHeaderException(MissingRequestHeaderException e) {
+        return new ErrorPayload(ILLEGAL_OPERATION_EXCEPTION.getStatus(), e.getMessage());
+    }
+
+    @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public @ResponseBody ErrorPayload handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e) {
+        return new ErrorPayload(BAD_REQUEST.getStatus(), e.getMessage());
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
