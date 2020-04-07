@@ -10,8 +10,8 @@ public class Algorithm {
         if (!data.isEmpty()) {
             Collections.sort(data);
             double mediumSize = mediumSize(data);
-            int mediumFirstIndex = (int) Math.floor(mediumSize);
-            int mediumSecondIndex = (int) Math.ceil(mediumSize);
+            int mediumFirstIndex = (int) Math.floor(mediumSize) - 1;
+            int mediumSecondIndex = (int) Math.ceil(mediumSize) - 1;
             result = (double) (data.get(mediumFirstIndex) + data.get(mediumSecondIndex)) / 2;
         }
         return result;
