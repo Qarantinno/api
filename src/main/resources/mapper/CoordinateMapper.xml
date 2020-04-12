@@ -8,9 +8,15 @@
         Insert into coordinates(coordinate) values (point(#{lat}, #{lng}))
     </insert>
 
+    <sql id="selectAllBody">
+        c.id as coordinate_id,
+        c.coordinate[0] as coordinate_lat,
+        c.coordinate[1] as coordinate_lng
+    </sql>
+
     <resultMap id="coordinateResultMap" type="com.qarantinno.api.domain.Coordinate" autoMapping="false">
         <id property="id" column="coordinate_id"/>
-        <result property="ltd" column="coordinate_coordinate.x"/>
-        <result property="lng" column="coordinate_coordinate.y"/>
+        <result property="lat" column="coordinate_lat"/>
+        <result property="lng" column="coordinate_lng"/>
     </resultMap>
 </mapper>

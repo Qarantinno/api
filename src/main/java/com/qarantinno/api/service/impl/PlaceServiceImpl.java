@@ -3,6 +3,7 @@ package com.qarantinno.api.service.impl;
 import com.qarantinno.api.domain.Coordinate;
 import com.qarantinno.api.domain.Place;
 import com.qarantinno.api.domain.Shot;
+import com.qarantinno.api.domain.criteria.PlaceCriteria;
 import com.qarantinno.api.domain.execption.ResourceNotFoundException;
 import com.qarantinno.api.persistence.mapper.PlaceMapper;
 import com.qarantinno.api.service.CoordinateService;
@@ -10,6 +11,8 @@ import com.qarantinno.api.service.PlaceService;
 import com.qarantinno.api.service.ShotService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static com.qarantinno.api.domain.execption.ResourceNotFoundException.ResourceNotFoundExceptionType.PLACE_NOT_FOUND;
 
@@ -50,6 +53,11 @@ public class PlaceServiceImpl implements PlaceService {
     public Place retrieveByNameAndTypeAndModifier(String name, Place.Type type, Place.Modifier modifier) {
         return placeMapper.findByNameAndTypeAndModifier(name, type, modifier)
                           .orElseThrow(() -> new ResourceNotFoundException(PLACE_NOT_FOUND, String.format(ERR_MSG_PLACE_NOT_EXISTS_BY_NAME_TYPE_MODIFIER, name, type, modifier)));
+    }
+
+    @Override
+    public List<Place> retrieveAll(PlaceCriteria criteria) {
+        return placeMapper.findAllByCriteria(criteria);
     }
 
     @Override

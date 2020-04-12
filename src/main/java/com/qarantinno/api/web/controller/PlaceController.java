@@ -2,17 +2,20 @@ package com.qarantinno.api.web.controller;
 
 import com.qarantinno.api.domain.Place;
 import com.qarantinno.api.domain.Shot;
+import com.qarantinno.api.domain.criteria.PlaceCriteria;
 import com.qarantinno.api.domain.execption.IllegalOperationException;
 import com.qarantinno.api.service.PlaceService;
 import com.qarantinno.api.web.dto.PlaceDTO;
 import com.qarantinno.api.web.dto.ShotDTO;
 import com.qarantinno.api.web.dto.ValidationGroups;
+import com.qarantinno.api.web.dto.criteria.PlaceCriteriaDTO;
 import io.swagger.annotations.Api;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +25,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.groups.Default;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.qarantinno.api.domain.execption.IllegalOperationException.IllegalOperationExceptionType.ILLEGAL_PLACE_CREATE;
 import static com.qarantinno.api.domain.execption.IllegalOperationException.IllegalOperationExceptionType.ILLEGAL_SHOT_CREATE;
@@ -56,6 +62,19 @@ public class PlaceController {
         Place place = mapper.map(placeDTO, Place.class);
         place = placeService.create(place);
         return mapper.map(place, PlaceDTO.class);
+    }
+
+    @GetMapping
+    public List<PlaceDTO> getAll(PlaceCriteriaDTO placeCriteriaDTO, @RequestHeader("client-token") String clientId) {
+        // TODO: 4/4/20 add security instead of hardcoded token
+        if (!clientToken.equals(clientId)) {
+            throw new IllegalOperationException(ILLEGAL_PLACE_CREATE, "Cannot create place: illegal access");
+        }
+        PlaceCriteria criteria = mapper.map(placeCriteriaDTO, PlaceCriteria.class);
+        List<Place> places = placeService.retrieveAll(criteria);
+        return places.stream()
+                     .map(place -> mapper.map(place, PlaceDTO.class))
+                     .collect(Collectors.toList());
     }
 
     @PostMapping("/{id}/shots")

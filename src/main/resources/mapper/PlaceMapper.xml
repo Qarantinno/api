@@ -39,8 +39,7 @@
         p.modifier as place_modifier,
         p.address as place_address,
 
-        c.id as coordinate_id,
-        c.coordinate as coordinate_coordinate
+        <include refid="com.qarantinno.api.persistence.mapper.CoordinateMapper.selectAllBody"/>
     </sql>
 
     <sql id="selectAllJoins">
@@ -58,6 +57,30 @@
     <select id="findByNameAndTypeAndModifier" resultMap="placeResultMap">
         <include refid="selectAll"/>
         Where p.name = #{name} and p.type = #{type} and p.modifier = #{modifier}
+    </select>
+
+    <select id="findAllByCriteria" resultMap="placeResultMap">
+        <include refid="selectAll"/>
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            <if test="name != null and name != 'any'">
+                AND p.name = #{name}
+            </if>
+            <if test="type != null and type.name() != 'any'">
+                AND p.type = #{type}
+            </if>
+            <if test="modifier != null and modifier.name() != 'any'">
+                AND p.modifier = #{modifier}
+            </if>
+            <if test="address != null and address != 'any'">
+                AND p.address = #{address}
+            </if>
+            <if test="lat != null">
+                AND c.coordinate[0] = #{lat}
+            </if>
+            <if test="lng != null">
+                AND c.coordinate[1] = #{lng}
+            </if>
+        </trim>
     </select>
 
     <select id="existsById" resultType="java.lang.Boolean">
