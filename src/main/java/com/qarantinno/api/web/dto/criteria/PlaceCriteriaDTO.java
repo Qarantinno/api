@@ -1,6 +1,7 @@
 package com.qarantinno.api.web.dto.criteria;
 
 import com.qarantinno.api.domain.Place;
+import com.qarantinno.api.web.util.deserializer.ModifierDeserializer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,4 +18,7 @@ public class PlaceCriteriaDTO {
     private Double lat;
     private Double lng;
 
+    public void setModifier(String modifier) {
+        this.modifier = ModifierDeserializer.recognizeModifier(modifier);
+    }
 }

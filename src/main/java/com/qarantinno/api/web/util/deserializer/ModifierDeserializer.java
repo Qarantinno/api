@@ -16,6 +16,10 @@ public class ModifierDeserializer extends JsonDeserializer<Place.Modifier> {
     @Override
     public Place.Modifier deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
         String value = p.getText();
+        return recognizeModifier(value);
+    }
+
+    public static Place.Modifier recognizeModifier(String value) {
         return Arrays.stream(Place.Modifier.values())
                      .filter(modifier -> modifier.getDisplayName() != null && modifier.getDisplayName().equals(value))
                      .findFirst()

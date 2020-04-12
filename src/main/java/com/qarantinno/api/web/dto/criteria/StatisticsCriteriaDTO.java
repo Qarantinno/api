@@ -2,6 +2,7 @@ package com.qarantinno.api.web.dto.criteria;
 
 import com.qarantinno.api.domain.Place;
 import com.qarantinno.api.domain.Shot;
+import com.qarantinno.api.web.util.deserializer.ModifierDeserializer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,5 +21,9 @@ public class StatisticsCriteriaDTO {
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime moment;
+
+    public void setPlaceModifier(String placeModifier) {
+        this.placeModifier = ModifierDeserializer.recognizeModifier(placeModifier);
+    }
 
 }
