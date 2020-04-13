@@ -1,6 +1,7 @@
-package com.qarantinno.api.web.util;
+package com.qarantinno.api.web.util.validator;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.qarantinno.api.web.util.validator.JsonString;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

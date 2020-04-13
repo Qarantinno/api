@@ -2,8 +2,11 @@ package com.qarantinno.api.web.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.qarantinno.api.domain.Shot;
-import com.qarantinno.api.web.util.JsonString;
+import com.qarantinno.api.web.util.deserializer.ToJsonDeserializer;
+import com.qarantinno.api.web.util.serializer.FromJsonSerializer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,7 +37,8 @@ public class ShotDTO {
     @NotNull
     private Shot.Source source;
 
-    @JsonString
+    @JsonDeserialize(using = ToJsonDeserializer.class)
+    @JsonSerialize(using = FromJsonSerializer.class)
     private String trackingData;
 
     @NotNull

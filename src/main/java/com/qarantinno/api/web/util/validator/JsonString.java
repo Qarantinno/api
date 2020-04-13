@@ -1,4 +1,4 @@
-package com.qarantinno.api.web.util;
+package com.qarantinno.api.web.util.validator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
