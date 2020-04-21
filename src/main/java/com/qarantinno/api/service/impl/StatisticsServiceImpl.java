@@ -75,7 +75,10 @@ public class StatisticsServiceImpl implements StatisticsService {
             timeLinedShots.putIfAbsent(iterateTime, new ArrayList<>());
 
             for (Shot shot : shots) {
-                if (isTimeInRange(range, iterateTime, shot.getShotAt().toLocalTime())) {
+                if (iterateTime.getMinute() != 0 && isTimeInRange(range, iterateTime, shot.getShotAt().toLocalTime())) {
+                    timeLinedShots.get(iterateTime).add(shot);
+                }
+                if (iterateTime.getMinute() == 0 && isTimeInRange(range * 2, iterateTime, shot.getShotAt().toLocalTime())) {
                     timeLinedShots.get(iterateTime).add(shot);
                 }
             }
