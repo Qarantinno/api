@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.AssertFalse;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -18,6 +19,9 @@ public class StatisticsCriteria {
     private Place.Modifier placeModifier;
     private Shot.WeekDay weekDay;
     private LocalDateTime moment;
+
+    private LocalTime timeFrom;
+    private LocalTime timeTo;
 
     @AssertFalse
     public boolean isMomentValid() {

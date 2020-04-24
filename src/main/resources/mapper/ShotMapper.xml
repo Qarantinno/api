@@ -40,6 +40,14 @@
             <if test="moment != null">
                 AND date_trunc('day', s.shot_at) = date_trunc('day', #{moment})
             </if>
+            <if test="timeFrom != null">
+                AND s.shot_at::time >= #{timeFrom}::time
+            </if>
+            <if test="timeTo != null">
+                <![CDATA[
+                    AND s.shot_at::time < #{timeTo}::time
+                ]]>
+            </if>
         </trim>
     </sql>
 

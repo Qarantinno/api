@@ -3,8 +3,7 @@ package com.qarantinno.api.web.controller;
 import com.qarantinno.api.domain.execption.IllegalOperationException;
 import com.qarantinno.api.domain.execption.ResourceNotFoundException;
 import com.qarantinno.api.web.dto.error.ErrorPayload;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
@@ -25,9 +24,8 @@ import static com.qarantinno.api.web.dto.error.ErrorPayload.InternalStatuses.INT
 import static com.qarantinno.api.web.dto.error.ErrorPayload.InternalStatuses.NOT_FOUND;
 
 @ControllerAdvice
+@Slf4j
 public class WebExceptionHandler {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(WebExceptionHandler.class);
 
     @ExceptionHandler(IllegalOperationException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
@@ -80,7 +78,7 @@ public class WebExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public @ResponseBody ErrorPayload handleNotTrackedExceptions(Exception e) {
-        LOGGER.error(e.getMessage(), e);
+        log.error(e.getMessage(), e);
         return new ErrorPayload(INTERNAL_SERVER_ERROR.getStatus(), INTERNAL_SERVER_ERROR.getMessage());
     }
 }

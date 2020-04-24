@@ -1,8 +1,7 @@
 package com.qarantinno.api.web;
 
+import lombok.extern.slf4j.Slf4j;
 import org.dozer.DozerBeanMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
@@ -26,9 +25,8 @@ import java.util.stream.Collectors;
 
 @Configuration
 @EnableSwagger2
+@Slf4j
 public class WebConfiguration {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(WebConfiguration.class);
 
     @Bean
     public DozerBeanMapper dozerMapper(ResourceLoader resourceLoader) {
@@ -49,7 +47,7 @@ public class WebConfiguration {
                                       .map(Optional::get)
                                       .collect(Collectors.toSet());
         } catch (IOException e) {
-            LOGGER.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
         return mappingsFileNames;
     }
@@ -59,7 +57,7 @@ public class WebConfiguration {
         try {
             url = resource.getURL().toString();
         } catch (IOException e) {
-            LOGGER.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
         return Optional.ofNullable(url);
     }

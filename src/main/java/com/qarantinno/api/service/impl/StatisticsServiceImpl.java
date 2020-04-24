@@ -21,6 +21,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 @Service
+@Deprecated(forRemoval = true)
 public class StatisticsServiceImpl implements StatisticsService {
 
     private final ShotService shotService;

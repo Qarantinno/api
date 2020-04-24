@@ -7,6 +7,7 @@ import com.qarantinno.api.web.dto.criteria.StatisticsCriteriaDTO;
 import com.qarantinno.api.web.dto.StatisticsDTO;
 import io.swagger.annotations.Api;
 import org.dozer.Mapper;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,7 @@ public class StatisticsController {
     private final StatisticsService statisticsService;
     private final Mapper mapper;
 
-    public StatisticsController(StatisticsService statisticsService, Mapper mapper) {
+    public StatisticsController(@Qualifier("statisticsServiceV2Impl") StatisticsService statisticsService, Mapper mapper) {
         this.statisticsService = statisticsService;
         this.mapper = mapper;
     }

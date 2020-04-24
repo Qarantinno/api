@@ -27,6 +27,10 @@ public class Statistics {
         private String name;
         private BigDecimal value;
 
+        public StatisticsEntry(String name) {
+            this.name = name;
+        }
+
         @Override
         public int compareTo(StatisticsEntry that) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
