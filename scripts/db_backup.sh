@@ -12,10 +12,12 @@ else
   set +a
 fi;
 
+cd "${SCRIPT_PATH}/../docker_env" || exit 1
+
 NOW_DATE_TAG=`date +%Y-%m-%d-%H-%M-%S`
 DUMP_CMD=$(docker-compose exec -T postgres which pg_dump)
 
-FILE_NAME=${DB_NAME}.${NOW_DATE_TAG}.sql
+FILE_NAME=${DATA_DB_NAME}.${NOW_DATE_TAG}.sql
 BAK_PATH="${SCRIPT_PATH}/../backups/db"
 
 mkdir -p ${BAK_PATH}
