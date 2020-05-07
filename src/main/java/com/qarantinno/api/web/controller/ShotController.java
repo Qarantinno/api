@@ -42,7 +42,7 @@ public class ShotController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ShotDTO create(@RequestBody @Validated(ValidationGroups.ExternalOnCreate.class) ShotDTO shotDTO, @RequestHeader("client-user-token") String clientUserToken) {
+    public ShotDTO create(@RequestBody @Validated(ValidationGroups.ExternalOnCreate.class) ShotDTO shotDTO, @RequestHeader("client-token") String clientUserToken) {
         if (!this.clientUserToken.equals(clientUserToken)) {
             throw new IllegalOperationException(ILLEGAL_SHOT_CREATE, "Cannot create shot: illegal access");
         }

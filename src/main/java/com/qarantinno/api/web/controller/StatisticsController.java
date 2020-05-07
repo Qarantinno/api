@@ -40,7 +40,7 @@ public class StatisticsController {
     }
 
     @GetMapping
-    public StatisticsDTO getAll(StatisticsCriteriaDTO criteriaDTO, @RequestHeader("client-user-token") String clientUserToken) {
+    public StatisticsDTO getAll(StatisticsCriteriaDTO criteriaDTO, @RequestHeader("client-token") String clientUserToken) {
         if (!this.clientUserToken.equals(clientUserToken)) {
             throw new IllegalOperationException(ILLEGAL_STATISTICS_GET, "Cannot get statistics: illegal access");
         }
