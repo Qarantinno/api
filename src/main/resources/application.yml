@@ -4,7 +4,10 @@ app:
     username: ${db.username}
     password: ${db.password}
     max-pool-size: ${db.max-pool-size}
-  client-token: ${auth.client-token}
+  auth:
+    client-token: ${auth.client-token}
+    client-user-token: ${auth.client-user-token}
+    origins: ${auth.origins}
   port: ${port}
 
 server:

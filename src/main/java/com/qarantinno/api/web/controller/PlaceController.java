@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.qarantinno.api.domain.execption.IllegalOperationException.IllegalOperationExceptionType.ILLEGAL_PLACE_CREATE;
+import static com.qarantinno.api.domain.execption.IllegalOperationException.IllegalOperationExceptionType.ILLEGAL_PLACE_GET;
 import static com.qarantinno.api.domain.execption.IllegalOperationException.IllegalOperationExceptionType.ILLEGAL_SHOT_CREATE;
 
 @Api("Place controller documentation")
@@ -45,7 +46,7 @@ public class PlaceController {
     public PlaceController(
             PlaceService placeService,
             Mapper mapper,
-            @Value("${app.client-token}") String clientToken
+            @Value("${app.auth.client-token}") String clientToken
     ) {
         this.placeService = placeService;
         this.mapper = mapper;
@@ -68,7 +69,7 @@ public class PlaceController {
     public List<PlaceDTO> getAll(PlaceCriteriaDTO placeCriteriaDTO, @RequestHeader("client-token") String clientId) {
         // TODO: 4/4/20 add security instead of hardcoded token
         if (!clientToken.equals(clientId)) {
-            throw new IllegalOperationException(ILLEGAL_PLACE_CREATE, "Cannot create place: illegal access");
+            throw new IllegalOperationException(ILLEGAL_PLACE_GET, "Cannot get place: illegal access");
         }
         PlaceCriteria criteria = mapper.map(placeCriteriaDTO, PlaceCriteria.class);
         List<Place> places = placeService.retrieveAll(criteria);

@@ -27,6 +27,7 @@ ext {
 
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-security"
 
     implementation "org.mybatis.spring.boot:mybatis-spring-boot-starter:$mybatisVersion"
     implementation "org.postgresql:postgresql:$postgresqlVersion"
