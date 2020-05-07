@@ -5,3 +5,4 @@
 .DS_Store
 .env
 /docker_env/data
+/backups
