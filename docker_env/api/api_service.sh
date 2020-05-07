@@ -13,5 +13,4 @@ else
 fi
 
 cd /app &&
-  ./gradlew clean build &&
-  ./gradlew bootRun -Pargs=--db.url=jdbc:postgresql://${DATA_DB_HOST}:${DATA_DB_PORT}/${DATA_DB_NAME},--db.username=${DATA_DB_USER},--db.password=${DATA_DB_PASSWORD},--db.max-pool-size=10,--auth.client-token=${DEFAULT_CLIENT_ID},--port=${APP_SERVICE_PORT}
+  ./gradlew clean build bootRun -Pargs=--db.url=jdbc:postgresql://${DATA_DB_HOST}:${DATA_DB_PORT}/${DATA_DB_NAME},--db.username=${DATA_DB_USER},--db.password=${DATA_DB_PASSWORD},--db.max-pool-size=10,--auth.client-token=${DEFAULT_CLIENT_ID},--port=${APP_SERVICE_PORT},--auth.client-user-token=${USER_CLIENT_ID},--auth.origins=${ALLOWED_ORIGINS}
