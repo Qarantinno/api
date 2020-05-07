@@ -8,7 +8,8 @@ public class IllegalOperationException extends ApplicationException {
         ILLEGAL_SHOT_CREATE("Cannot create a shot"),
         ILLEGAL_WEEK_DAY("Unsupported week day"),
         MUTUAL_EXCLUSIVE_VALUES("Some values are mutual exclusive"),
-        ILLEGAL_PLACE_GET("Cannot get a place");
+        ILLEGAL_PLACE_GET("Cannot get a place"),
+        ILLEGAL_STATISTICS_GET("Cannot get a statistics");
 
         private final String message;
 

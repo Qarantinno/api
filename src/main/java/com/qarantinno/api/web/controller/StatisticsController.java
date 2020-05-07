@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.qarantinno.api.domain.execption.IllegalOperationException.IllegalOperationExceptionType.ILLEGAL_SHOT_CREATE;
+import static com.qarantinno.api.domain.execption.IllegalOperationException.IllegalOperationExceptionType.ILLEGAL_STATISTICS_GET;
 
 @Api("Statistics controller documentation")
 @ResponseStatus(HttpStatus.OK)
@@ -42,7 +42,7 @@ public class StatisticsController {
     @GetMapping
     public StatisticsDTO getAll(StatisticsCriteriaDTO criteriaDTO, @RequestHeader("client-user-token") String clientUserToken) {
         if (!this.clientUserToken.equals(clientUserToken)) {
-            throw new IllegalOperationException(ILLEGAL_SHOT_CREATE, "Cannot create shot: illegal access");
+            throw new IllegalOperationException(ILLEGAL_STATISTICS_GET, "Cannot get statistics: illegal access");
         }
         StatisticsCriteria criteria = mapper.map(criteriaDTO, StatisticsCriteria.class);
         Statistics statistics = statisticsService.calculateStatistics(criteria);
