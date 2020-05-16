@@ -6,3 +6,4 @@
 .env
 /docker_env/data
 /backups
+/docker_env/nginx/webroot/
