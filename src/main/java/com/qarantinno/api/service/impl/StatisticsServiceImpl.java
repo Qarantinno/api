@@ -42,7 +42,7 @@ public class StatisticsServiceImpl implements StatisticsService {
         Map<LocalTime, List<Shot>> timedShots = collectToTimeMap(shots);
         Map<LocalTime, Double> processedShots = timedShots.entrySet().stream()
                                                           .map(timedShotEntry -> {
-                                                              double algorithmValue = Algorithm.median(collectShotAt(timedShotEntry.getValue()));
+                                                              double algorithmValue = Algorithm.median(collectShotAt(timedShotEntry.getValue()), Algorithm.Precondition.NIGHT_TIME);
                                                               return new AbstractMap.SimpleEntry<>(timedShotEntry.getKey(), algorithmValue);
                                                           }).collect(Collectors.toMap(AbstractMap.SimpleEntry::getKey, AbstractMap.SimpleEntry::getValue));
         List<Statistics.StatisticsEntry> hourStatisticsEntry = processedShots.entrySet().stream()

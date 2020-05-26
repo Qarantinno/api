@@ -66,7 +66,7 @@ public class StatisticsServiceV2Impl implements StatisticsService {
         List<Integer> peopleCount = shots.stream()
                                          .map(Shot::getPeople)
                                          .collect(Collectors.toList());
-        double value = Algorithm.median(peopleCount);
+        double value = Algorithm.median(peopleCount, Algorithm.Precondition.NIGHT_TIME);
         return new BigDecimal(value);
     }
 
